@@ -1,7 +1,6 @@
 import base64
 import json
 
-from os import path
 from serial import Serial
 
 
@@ -12,6 +11,24 @@ class Sector(object):
     def __init__(self, sector_id=None, data=None):
         self.sector_id = sector_id or ('\x00' * self.SECTOR_ID_LENGTH)
         self.data = data or ('\x00' * self.DATA_LENGTH)
+
+    @property
+    def data(self):
+        return self._data
+
+    @data.setter
+    def data(self, value):
+        assert len(value) == Sector.DATA_LENGTH
+        self._data = value
+
+    @property
+    def sector_id(self):
+        return self._sector_id
+
+    @sector_id.setter
+    def sector_id(self, value):
+        assert len(value) == Sector.SECTOR_ID_LENGTH
+        self._sector_id = value
 
 
 class Disk(object):
@@ -53,11 +70,10 @@ class Disk(object):
 
         while data[i * Sector.DATA_LENGTH:(i + 1) * Sector.DATA_LENGTH]:
             sector = self.sectors[i]
-            sector.data = data
+            sector.data = data[i * Sector.DATA_LENGTH:(i + 1) * Sector.DATA_LENGTH]
             sector.sector_id = '\x01' + '\x00' * (Sector.SECTOR_ID_LENGTH - 1)
 
             i += 1
-
 
     def save(self, filename=None):
         data = {

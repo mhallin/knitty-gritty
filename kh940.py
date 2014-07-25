@@ -111,10 +111,6 @@ def _read_data2(data):
 
 
 class Pattern(object):
-    @classmethod
-    def from_json(cls, data):
-        return cls(data['number'], data['rows'])
-
     def __init__(self, pattern_number, rows, memo=None):
         self.pattern_number = pattern_number
         self.rows = rows
@@ -155,12 +151,6 @@ class Pattern(object):
     def serialize_data(self):
         return self._serialize_rows() + self.memo
 
-    def to_json(self):
-        return {
-            'rows': self.rows,
-            'number': self.pattern_number,
-        }
-
 
 class MachineState(object):
     SERIALIZED_PATTERN_LIST_LENGTH = 686
@@ -175,15 +165,11 @@ class MachineState(object):
                    data2='\x00' * 20)
 
     @classmethod
-    def from_json(cls, data):
-        patterns = [Pattern.from_json(p) for p in data['patterns']]
-
-        return cls(patterns=patterns,
-                   data0='\x00' * 32,
-                   control_data=_make_empty_control_data(),
-                   data1='\x00' * 211,
-                   loaded_pattern=patterns[0].pattern_number if patterns else 0,
-                   data2='\x00' * 20)
+    def with_patterns(cls, patterns):
+        machine = cls.make_empty()
+        machine.patterns = patterns
+        machine.loaded_pattern = patterns[0].pattern_number if patterns else 0
+        return machine
 
     def __init__(self, patterns,
                  data0,
@@ -302,11 +288,6 @@ class MachineState(object):
                 return pattern
 
         return None
-
-    def to_json(self):
-        return {
-            'patterns': [p.to_json() for p in self.patterns]
-        }
 
 
 def parse_memory_dump(data):
