@@ -1,9 +1,12 @@
 from setuptools import setup, find_packages
 
+with open('README.rst') as f:
+    description = f.read()
+
 setup(
     name='knitty-gritty',
     version='0.0.1',
-    description='Pattern uploader/downloader for Brother knitting machines',
+    description=description,
     url='https://github.com/mhallin/knitty-gritty',
 
     author='Magnus Hallin',
@@ -26,6 +29,7 @@ setup(
             'pep8>=1.5,<1.6',
             'pip-tools>=0.3,<0.4',
             'pyflakes>=0.8.1,<0.9',
+            'wheel>=0.24,<0.25',
         ],
     },
 
