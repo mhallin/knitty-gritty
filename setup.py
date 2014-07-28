@@ -5,8 +5,9 @@ with open('README.rst') as f:
 
 setup(
     name='knitty-gritty',
-    version='0.0.1',
-    description=description,
+    version='0.0.2',
+    description='A tool for managing knitting machine patterns',
+    long_description=description,
     url='https://github.com/mhallin/knitty-gritty',
 
     author='Magnus Hallin',
