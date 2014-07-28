@@ -28,7 +28,9 @@ Platform Support
 ----------------
 
 Only tested on OS X, but should work out of the box on both Windows and Linux
-given that you have the software requirements listed below installed.
+given that you have the software requirements listed below installed. Please
+let me know if it does not - preferably with a pull request fixing the issue
+:-)
 
 What You Will Need
 ==================
@@ -48,6 +50,17 @@ Installation Instructions
 
 Knitty-gritty is distributed as a Python package. Install it via pip:
 
-.. code-block: sh
+.. code-block:: sh
 
    pip install knitty-gritty
+
+Acknowledgements
+================
+
+* The file format/memory dump file format documentation over at STG's
+  knittington_ repository was a huge help in writing the parser/serializer.
+* Steve Conklin's PDDemulate.py in knitting_machine_ was very useful in
+  filling the gaps in Tandy's official floppy drive command documentation.
+
+.. _knittington: https://github.com/stg/knittington
+.. _knitting_machine: https://github.com/adafruit/knitting_machine
